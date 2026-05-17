@@ -1,0 +1,872 @@
+module.vpc.data.aws_availability_zones.available: Reading...
+module.vpc.data.aws_availability_zones.available: Read complete after 1s [id=ap-south-1]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # module.addons.data.aws_iam_policy_document.ebs_csi_assume_role will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "ebs_csi_assume_role" {
+      + id   = (known after apply)
+      + json = (known after apply)
+
+      + statement {
+          + actions = [
+              + "sts:AssumeRoleWithWebIdentity",
+            ]
+          + effect  = "Allow"
+
+          + condition {
+              + test     = "StringEquals"
+              + values   = [
+                  + "system:serviceaccount:kube-system:ebs-csi-controller-sa",
+                ]
+              + variable = (known after apply)
+            }
+
+          + principals {
+              + identifiers = [
+                  + (known after apply),
+                ]
+              + type        = "Federated"
+            }
+        }
+    }
+
+  # module.addons.aws_eks_addon.ebs_csi will be created
+  + resource "aws_eks_addon" "ebs_csi" {
+      + addon_name               = "aws-ebs-csi-driver"
+      + addon_version            = "v1.46.0-eksbuild.1"
+      + arn                      = (known after apply)
+      + cluster_name             = "servify-dev"
+      + configuration_values     = (known after apply)
+      + created_at               = (known after apply)
+      + id                       = (known after apply)
+      + modified_at              = (known after apply)
+      + service_account_role_arn = (known after apply)
+      + tags_all                 = (known after apply)
+    }
+
+  # module.addons.aws_iam_role.ebs_csi will be created
+  + resource "aws_iam_role" "ebs_csi" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = (known after apply)
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "servify-dev-ebs-csi-driver-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.addons.aws_iam_role_policy_attachment.ebs_csi_policy will be created
+  + resource "aws_iam_role_policy_attachment" "ebs_csi_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+      + role       = "servify-dev-ebs-csi-driver-role"
+    }
+
+  # module.eks.aws_eks_cluster.main will be created
+  + resource "aws_eks_cluster" "main" {
+      + arn                   = (known after apply)
+      + certificate_authority = (known after apply)
+      + cluster_id            = (known after apply)
+      + created_at            = (known after apply)
+      + endpoint              = (known after apply)
+      + id                    = (known after apply)
+      + identity              = (known after apply)
+      + name                  = "servify-dev"
+      + platform_version      = (known after apply)
+      + role_arn              = (known after apply)
+      + status                = (known after apply)
+      + tags                  = {
+          + "Project"                              = "servify-dev"
+          + "alpha.eksctl.io/cluster-oidc-enabled" = "true"
+        }
+      + tags_all              = {
+          + "Project"                              = "servify-dev"
+          + "alpha.eksctl.io/cluster-oidc-enabled" = "true"
+        }
+      + version               = "1.32"
+
+      + kubernetes_network_config (known after apply)
+
+      + vpc_config {
+          + cluster_security_group_id = (known after apply)
+          + endpoint_private_access   = true
+          + endpoint_public_access    = true
+          + public_access_cidrs       = [
+              + "0.0.0.0/0",
+            ]
+          + subnet_ids                = (known after apply)
+          + vpc_id                    = (known after apply)
+        }
+    }
+
+  # module.eks.aws_eks_node_group.main will be created
+  + resource "aws_eks_node_group" "main" {
+      + ami_type               = "AL2_x86_64"
+      + arn                    = (known after apply)
+      + capacity_type          = "ON_DEMAND"
+      + cluster_name           = "servify-dev"
+      + disk_size              = (known after apply)
+      + id                     = (known after apply)
+      + instance_types         = [
+          + "t3a.medium",
+        ]
+      + node_group_name        = "servify-dev-node-group"
+      + node_group_name_prefix = (known after apply)
+      + node_role_arn          = (known after apply)
+      + release_version        = (known after apply)
+      + resources              = (known after apply)
+      + status                 = (known after apply)
+      + subnet_ids             = (known after apply)
+      + tags                   = {
+          + "Project" = "servify-dev"
+        }
+      + tags_all               = {
+          + "Project" = "servify-dev"
+        }
+      + version                = (known after apply)
+
+      + scaling_config {
+          + desired_size = 2
+          + max_size     = 3
+          + min_size     = 1
+        }
+
+      + update_config (known after apply)
+    }
+
+  # module.eks.aws_security_group.eks_cluster will be created
+  + resource "aws_security_group" "eks_cluster" {
+      + arn                    = (known after apply)
+      + description            = "Cluster communication with worker nodes"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "servify-dev-cluster-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name" = "servify-dev-cluster-sg"
+        }
+      + tags_all               = {
+          + "Name" = "servify-dev-cluster-sg"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.eks.aws_security_group.eks_nodes will be created
+  + resource "aws_security_group" "eks_nodes" {
+      + arn                    = (known after apply)
+      + description            = "Security group for all nodes in the cluster"
+      + egress                 = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "Allow all outbound traffic"
+              + from_port        = 0
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+            },
+        ]
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "servify-dev-node-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name"                              = "servify-dev-node-sg"
+          + "kubernetes.io/cluster/servify-dev" = "owned"
+        }
+      + tags_all               = {
+          + "Name"                              = "servify-dev-node-sg"
+          + "kubernetes.io/cluster/servify-dev" = "owned"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.eks.aws_security_group_rule.cluster_inbound will be created
+  + resource "aws_security_group_rule" "cluster_inbound" {
+      + description              = "Allow worker nodes to communicate with the cluster API Server"
+      + from_port                = 443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 443
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.cluster_outbound will be created
+  + resource "aws_security_group_rule" "cluster_outbound" {
+      + description              = "Allow cluster API Server to communicate with the worker nodes"
+      + from_port                = 1024
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "egress"
+    }
+
+  # module.eks.aws_security_group_rule.nodes_cluster_inbound will be created
+  + resource "aws_security_group_rule" "nodes_cluster_inbound" {
+      + description              = "Allow worker kubeletes and pods to receive communication from the cluster control plane"
+      + from_port                = 1025
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.nodes_internal will be created
+  + resource "aws_security_group_rule" "nodes_internal" {
+      + description              = "Allow nodes to communicate with each other"
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "ingress"
+    }
+
+  # module.iam.aws_iam_role.eks_cluster will be created
+  + resource "aws_iam_role" "eks_cluster" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "eks.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "servify-dev-eks-cluster-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.iam.aws_iam_role.node will be created
+  + resource "aws_iam_role" "node" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "ec2.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "servify-dev-eks-node-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.iam.aws_iam_role_policy_attachment.eks_cluster_policy will be created
+  + resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      + role       = "servify-dev-eks-cluster-role"
+    }
+
+  # module.iam.aws_iam_role_policy_attachment.eks_node_policy["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"] will be created
+  + resource "aws_iam_role_policy_attachment" "eks_node_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      + role       = "servify-dev-eks-node-role"
+    }
+
+  # module.iam.aws_iam_role_policy_attachment.eks_node_policy["arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"] will be created
+  + resource "aws_iam_role_policy_attachment" "eks_node_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+      + role       = "servify-dev-eks-node-role"
+    }
+
+  # module.iam.aws_iam_role_policy_attachment.eks_node_policy["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"] will be created
+  + resource "aws_iam_role_policy_attachment" "eks_node_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      + role       = "servify-dev-eks-node-role"
+    }
+
+  # module.iam.aws_iam_role_policy_attachment.eks_node_policy["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"] will be created
+  + resource "aws_iam_role_policy_attachment" "eks_node_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+      + role       = "servify-dev-eks-node-role"
+    }
+
+  # module.oidc.data.aws_eks_cluster.this will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_cluster" "this" {
+      + arn                       = (known after apply)
+      + certificate_authority     = (known after apply)
+      + cluster_id                = (known after apply)
+      + created_at                = (known after apply)
+      + enabled_cluster_log_types = (known after apply)
+      + endpoint                  = (known after apply)
+      + id                        = (known after apply)
+      + identity                  = (known after apply)
+      + kubernetes_network_config = (known after apply)
+      + name                      = "servify-dev"
+      + outpost_config            = (known after apply)
+      + platform_version          = (known after apply)
+      + role_arn                  = (known after apply)
+      + status                    = (known after apply)
+      + tags                      = (known after apply)
+      + version                   = (known after apply)
+      + vpc_config                = (known after apply)
+    }
+
+  # module.oidc.data.aws_eks_cluster_auth.this will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_cluster_auth" "this" {
+      + id    = (known after apply)
+      + name  = "servify-dev"
+      + token = (sensitive value)
+    }
+
+  # module.oidc.data.tls_certificate.this will be read during apply
+  # (config refers to values not yet known)
+ <= data "tls_certificate" "this" {
+      + certificates = (known after apply)
+      + id           = (known after apply)
+      + url          = (known after apply)
+    }
+
+  # module.oidc.aws_iam_openid_connect_provider.this will be created
+  + resource "aws_iam_openid_connect_provider" "this" {
+      + arn             = (known after apply)
+      + client_id_list  = [
+          + "sts.amazonaws.com",
+        ]
+      + id              = (known after apply)
+      + tags_all        = (known after apply)
+      + thumbprint_list = (known after apply)
+      + url             = (known after apply)
+    }
+
+  # module.vpc.aws_eip.main will be created
+  + resource "aws_eip" "main" {
+      + allocation_id        = (known after apply)
+      + association_id       = (known after apply)
+      + carrier_ip           = (known after apply)
+      + customer_owned_ip    = (known after apply)
+      + domain               = (known after apply)
+      + id                   = (known after apply)
+      + instance             = (known after apply)
+      + network_border_group = (known after apply)
+      + network_interface    = (known after apply)
+      + private_dns          = (known after apply)
+      + private_ip           = (known after apply)
+      + public_dns           = (known after apply)
+      + public_ip            = (known after apply)
+      + public_ipv4_pool     = (known after apply)
+      + tags                 = {
+          + "Name" = "servify-dev-ngw-ip"
+        }
+      + tags_all             = {
+          + "Name" = "servify-dev-ngw-ip"
+        }
+      + vpc                  = (known after apply)
+    }
+
+  # module.vpc.aws_internet_gateway.main will be created
+  + resource "aws_internet_gateway" "main" {
+      + arn      = (known after apply)
+      + id       = (known after apply)
+      + owner_id = (known after apply)
+      + tags     = {
+          + "Name" = "servify-dev-igw"
+        }
+      + tags_all = {
+          + "Name" = "servify-dev-igw"
+        }
+      + vpc_id   = (known after apply)
+    }
+
+  # module.vpc.aws_nat_gateway.main will be created
+  + resource "aws_nat_gateway" "main" {
+      + allocation_id        = (known after apply)
+      + association_id       = (known after apply)
+      + connectivity_type    = "public"
+      + id                   = (known after apply)
+      + network_interface_id = (known after apply)
+      + private_ip           = (known after apply)
+      + public_ip            = (known after apply)
+      + subnet_id            = (known after apply)
+      + tags                 = {
+          + "Name" = "servify-dev-ngw"
+        }
+      + tags_all             = {
+          + "Name" = "servify-dev-ngw"
+        }
+    }
+
+  # module.vpc.aws_route.main will be created
+  + resource "aws_route" "main" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + nat_gateway_id         = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+    }
+
+  # module.vpc.aws_route_table.main will be created
+  + resource "aws_route_table" "main" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = [
+          + {
+              + cidr_block                 = "0.0.0.0/0"
+              + gateway_id                 = (known after apply)
+                # (12 unchanged attributes hidden)
+            },
+        ]
+      + tags             = {
+          + "Name" = "servify-dev-default-rt"
+        }
+      + tags_all         = {
+          + "Name" = "servify-dev-default-rt"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.internet_access[0] will be created
+  + resource "aws_route_table_association" "internet_access" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.internet_access[1] will be created
+  + resource "aws_route_table_association" "internet_access" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_security_group.control_plane_sg will be created
+  + resource "aws_security_group" "control_plane_sg" {
+      + arn                    = (known after apply)
+      + description            = "Managed by Terraform"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "servify-dev-ControlPlane-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name" = "servify-dev-ControlPlane-sg"
+        }
+      + tags_all               = {
+          + "Name" = "servify-dev-ControlPlane-sg"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.vpc.aws_security_group.data_plane_sg will be created
+  + resource "aws_security_group" "data_plane_sg" {
+      + arn                    = (known after apply)
+      + description            = "Managed by Terraform"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "servify-dev-Worker-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name" = "servify-dev-Worker-sg"
+        }
+      + tags_all               = {
+          + "Name" = "servify-dev-Worker-sg"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.vpc.aws_security_group.public_sg will be created
+  + resource "aws_security_group" "public_sg" {
+      + arn                    = (known after apply)
+      + description            = "Managed by Terraform"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "servify-dev-Public-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name" = "servify-dev-Public-sg"
+        }
+      + tags_all               = {
+          + "Name" = "servify-dev-Public-sg"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.vpc.aws_security_group_rule.control_plane_inbound will be created
+  + resource "aws_security_group_rule" "control_plane_inbound" {
+      + cidr_blocks              = [
+          + "10.0.0.0/24",
+          + "10.0.1.0/24",
+          + "10.0.2.0/24",
+          + "10.0.3.0/24",
+        ]
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "ingress"
+    }
+
+  # module.vpc.aws_security_group_rule.control_plane_outbound will be created
+  + resource "aws_security_group_rule" "control_plane_outbound" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "egress"
+    }
+
+  # module.vpc.aws_security_group_rule.node_outbound will be created
+  + resource "aws_security_group_rule" "node_outbound" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # module.vpc.aws_security_group_rule.nodes will be created
+  + resource "aws_security_group_rule" "nodes" {
+      + cidr_blocks              = [
+          + "10.0.0.0/24",
+          + "10.0.1.0/24",
+          + "10.0.2.0/24",
+          + "10.0.3.0/24",
+        ]
+      + description              = "Allow nodes to communicate with each other"
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "ingress"
+    }
+
+  # module.vpc.aws_security_group_rule.nodes_inbound will be created
+  + resource "aws_security_group_rule" "nodes_inbound" {
+      + cidr_blocks              = [
+          + "10.0.2.0/24",
+          + "10.0.3.0/24",
+        ]
+      + description              = "Allow worker Kubelets and pods to receive communication from the cluster control plane"
+      + from_port                = 1025
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "ingress"
+    }
+
+  # module.vpc.aws_security_group_rule.sg_egress_public will be created
+  + resource "aws_security_group_rule" "sg_egress_public" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # module.vpc.aws_security_group_rule.sg_ingress_public_443 will be created
+  + resource "aws_security_group_rule" "sg_ingress_public_443" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 443
+      + type                     = "ingress"
+    }
+
+  # module.vpc.aws_security_group_rule.sg_ingress_public_80 will be created
+  + resource "aws_security_group_rule" "sg_ingress_public_80" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 80
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 80
+      + type                     = "ingress"
+    }
+
+  # module.vpc.aws_subnet.private[0] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "ap-south-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.3.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Name"                              = "servify-dev-private-subnet"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "kubernetes.io/role/internal-elb"   = "1"
+        }
+      + tags_all                                       = {
+          + "Name"                              = "servify-dev-private-subnet"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "kubernetes.io/role/internal-elb"   = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.private[1] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "ap-south-1b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.4.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Name"                              = "servify-dev-private-subnet"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "kubernetes.io/role/internal-elb"   = "1"
+        }
+      + tags_all                                       = {
+          + "Name"                              = "servify-dev-private-subnet"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "kubernetes.io/role/internal-elb"   = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.public[0] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "ap-south-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.1.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = true
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Name"                              = "servify-dev-public-subnet"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "kubernetes.io/role/elb"            = "1"
+        }
+      + tags_all                                       = {
+          + "Name"                              = "servify-dev-public-subnet"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "kubernetes.io/role/elb"            = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.public[1] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "ap-south-1b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.2.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = true
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Name"                              = "servify-dev-public-subnet"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "kubernetes.io/role/elb"            = "1"
+        }
+      + tags_all                                       = {
+          + "Name"                              = "servify-dev-public-subnet"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "kubernetes.io/role/elb"            = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_vpc.main will be created
+  + resource "aws_vpc" "main" {
+      + arn                                  = (known after apply)
+      + cidr_block                           = "10.0.0.0/16"
+      + default_network_acl_id               = (known after apply)
+      + default_route_table_id               = (known after apply)
+      + default_security_group_id            = (known after apply)
+      + dhcp_options_id                      = (known after apply)
+      + enable_classiclink                   = (known after apply)
+      + enable_classiclink_dns_support       = (known after apply)
+      + enable_dns_hostnames                 = true
+      + enable_dns_support                   = true
+      + enable_network_address_usage_metrics = (known after apply)
+      + id                                   = (known after apply)
+      + instance_tenancy                     = "default"
+      + ipv6_association_id                  = (known after apply)
+      + ipv6_cidr_block                      = (known after apply)
+      + ipv6_cidr_block_network_border_group = (known after apply)
+      + main_route_table_id                  = (known after apply)
+      + owner_id                             = (known after apply)
+      + tags                                 = {
+          + "Name"                              = "servify-dev-vpc"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+        }
+      + tags_all                             = {
+          + "Name"                              = "servify-dev-vpc"
+          + "kubernetes.io/cluster/servify-dev" = "shared"
+        }
+    }
+
+Plan: 42 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + cluster_ca_certificate = (known after apply)
+  + cluster_endpoint       = (known after apply)
+  + cluster_name           = "servify-dev"
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
