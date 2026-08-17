@@ -10,6 +10,6 @@ terraform {
 }
 
 provider "aws" {
-  region = var.region
-  profile = "servify_dev"
+  region  = var.region
+  profile = "cuddlyduddly"
 }

@@ -1,5 +1,5 @@
 module.vpc.data.aws_availability_zones.available: Reading...
-module.vpc.data.aws_availability_zones.available: Read complete after 1s [id=ap-south-1]
+module.vpc.data.aws_availability_zones.available: Read complete after 7s [id=ap-south-1]
 
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
@@ -42,7 +42,7 @@ Terraform will perform the following actions:
       + addon_name               = "aws-ebs-csi-driver"
       + addon_version            = "v1.46.0-eksbuild.1"
       + arn                      = (known after apply)
-      + cluster_name             = "servify-dev"
+      + cluster_name             = "cuddlyduddly"
       + configuration_values     = (known after apply)
       + created_at               = (known after apply)
       + id                       = (known after apply)
@@ -60,7 +60,7 @@ Terraform will perform the following actions:
       + id                    = (known after apply)
       + managed_policy_arns   = (known after apply)
       + max_session_duration  = 3600
-      + name                  = "servify-dev-ebs-csi-driver-role"
+      + name                  = "cuddlyduddly-ebs-csi-driver-role"
       + name_prefix           = (known after apply)
       + path                  = "/"
       + role_last_used        = (known after apply)
@@ -74,7 +74,7 @@ Terraform will perform the following actions:
   + resource "aws_iam_role_policy_attachment" "ebs_csi_policy" {
       + id         = (known after apply)
       + policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-      + role       = "servify-dev-ebs-csi-driver-role"
+      + role       = "cuddlyduddly-ebs-csi-driver-role"
     }
 
   # module.eks.aws_eks_cluster.main will be created
@@ -86,16 +86,16 @@ Terraform will perform the following actions:
       + endpoint              = (known after apply)
       + id                    = (known after apply)
       + identity              = (known after apply)
-      + name                  = "servify-dev"
+      + name                  = "cuddlyduddly"
       + platform_version      = (known after apply)
       + role_arn              = (known after apply)
       + status                = (known after apply)
       + tags                  = {
-          + "Project"                              = "servify-dev"
+          + "Project"                              = "cuddlyduddly"
           + "alpha.eksctl.io/cluster-oidc-enabled" = "true"
         }
       + tags_all              = {
-          + "Project"                              = "servify-dev"
+          + "Project"                              = "cuddlyduddly"
           + "alpha.eksctl.io/cluster-oidc-enabled" = "true"
         }
       + version               = "1.32"
@@ -119,13 +119,13 @@ Terraform will perform the following actions:
       + ami_type               = "AL2_x86_64"
       + arn                    = (known after apply)
       + capacity_type          = "ON_DEMAND"
-      + cluster_name           = "servify-dev"
+      + cluster_name           = "cuddlyduddly"
       + disk_size              = (known after apply)
       + id                     = (known after apply)
       + instance_types         = [
           + "t3a.medium",
         ]
-      + node_group_name        = "servify-dev-node-group"
+      + node_group_name        = "cuddlyduddly-node-group"
       + node_group_name_prefix = (known after apply)
       + node_role_arn          = (known after apply)
       + release_version        = (known after apply)
@@ -133,15 +133,15 @@ Terraform will perform the following actions:
       + status                 = (known after apply)
       + subnet_ids             = (known after apply)
       + tags                   = {
-          + "Project" = "servify-dev"
+          + "Project" = "cuddlyduddly"
         }
       + tags_all               = {
-          + "Project" = "servify-dev"
+          + "Project" = "cuddlyduddly"
         }
       + version                = (known after apply)
 
       + scaling_config {
-          + desired_size = 2
+          + desired_size = 1
           + max_size     = 3
           + min_size     = 1
         }
@@ -156,15 +156,15 @@ Terraform will perform the following actions:
       + egress                 = (known after apply)
       + id                     = (known after apply)
       + ingress                = (known after apply)
-      + name                   = "servify-dev-cluster-sg"
+      + name                   = "cuddlyduddly-cluster-sg"
       + name_prefix            = (known after apply)
       + owner_id               = (known after apply)
       + revoke_rules_on_delete = false
       + tags                   = {
-          + "Name" = "servify-dev-cluster-sg"
+          + "Name" = "cuddlyduddly-cluster-sg"
         }
       + tags_all               = {
-          + "Name" = "servify-dev-cluster-sg"
+          + "Name" = "cuddlyduddly-cluster-sg"
         }
       + vpc_id                 = (known after apply)
     }
@@ -190,17 +190,17 @@ Terraform will perform the following actions:
         ]
       + id                     = (known after apply)
       + ingress                = (known after apply)
-      + name                   = "servify-dev-node-sg"
+      + name                   = "cuddlyduddly-node-sg"
       + name_prefix            = (known after apply)
       + owner_id               = (known after apply)
       + revoke_rules_on_delete = false
       + tags                   = {
-          + "Name"                              = "servify-dev-node-sg"
-          + "kubernetes.io/cluster/servify-dev" = "owned"
+          + "Name"                               = "cuddlyduddly-node-sg"
+          + "kubernetes.io/cluster/cuddlyduddly" = "owned"
         }
       + tags_all               = {
-          + "Name"                              = "servify-dev-node-sg"
-          + "kubernetes.io/cluster/servify-dev" = "owned"
+          + "Name"                               = "cuddlyduddly-node-sg"
+          + "kubernetes.io/cluster/cuddlyduddly" = "owned"
         }
       + vpc_id                 = (known after apply)
     }
@@ -283,7 +283,7 @@ Terraform will perform the following actions:
       + id                    = (known after apply)
       + managed_policy_arns   = (known after apply)
       + max_session_duration  = 3600
-      + name                  = "servify-dev-eks-cluster-role"
+      + name                  = "cuddlyduddly-eks-cluster-role"
       + name_prefix           = (known after apply)
       + path                  = "/"
       + role_last_used        = (known after apply)
@@ -315,7 +315,7 @@ Terraform will perform the following actions:
       + id                    = (known after apply)
       + managed_policy_arns   = (known after apply)
       + max_session_duration  = 3600
-      + name                  = "servify-dev-eks-node-role"
+      + name                  = "cuddlyduddly-eks-node-role"
       + name_prefix           = (known after apply)
       + path                  = "/"
       + role_last_used        = (known after apply)
@@ -329,35 +329,35 @@ Terraform will perform the following actions:
   + resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
       + id         = (known after apply)
       + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-      + role       = "servify-dev-eks-cluster-role"
+      + role       = "cuddlyduddly-eks-cluster-role"
     }
 
   # module.iam.aws_iam_role_policy_attachment.eks_node_policy["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"] will be created
   + resource "aws_iam_role_policy_attachment" "eks_node_policy" {
       + id         = (known after apply)
       + policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-      + role       = "servify-dev-eks-node-role"
+      + role       = "cuddlyduddly-eks-node-role"
     }
 
   # module.iam.aws_iam_role_policy_attachment.eks_node_policy["arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"] will be created
   + resource "aws_iam_role_policy_attachment" "eks_node_policy" {
       + id         = (known after apply)
       + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-      + role       = "servify-dev-eks-node-role"
+      + role       = "cuddlyduddly-eks-node-role"
     }
 
   # module.iam.aws_iam_role_policy_attachment.eks_node_policy["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"] will be created
   + resource "aws_iam_role_policy_attachment" "eks_node_policy" {
       + id         = (known after apply)
       + policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-      + role       = "servify-dev-eks-node-role"
+      + role       = "cuddlyduddly-eks-node-role"
     }
 
   # module.iam.aws_iam_role_policy_attachment.eks_node_policy["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"] will be created
   + resource "aws_iam_role_policy_attachment" "eks_node_policy" {
       + id         = (known after apply)
       + policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-      + role       = "servify-dev-eks-node-role"
+      + role       = "cuddlyduddly-eks-node-role"
     }
 
   # module.oidc.data.aws_eks_cluster.this will be read during apply
@@ -372,7 +372,7 @@ Terraform will perform the following actions:
       + id                        = (known after apply)
       + identity                  = (known after apply)
       + kubernetes_network_config = (known after apply)
-      + name                      = "servify-dev"
+      + name                      = "cuddlyduddly"
       + outpost_config            = (known after apply)
       + platform_version          = (known after apply)
       + role_arn                  = (known after apply)
@@ -386,7 +386,7 @@ Terraform will perform the following actions:
   # (depends on a resource or a module with changes pending)
  <= data "aws_eks_cluster_auth" "this" {
       + id    = (known after apply)
-      + name  = "servify-dev"
+      + name  = "cuddlyduddly"
       + token = (sensitive value)
     }
 
@@ -427,10 +427,10 @@ Terraform will perform the following actions:
       + public_ip            = (known after apply)
       + public_ipv4_pool     = (known after apply)
       + tags                 = {
-          + "Name" = "servify-dev-ngw-ip"
+          + "Name" = "cuddlyduddly-ngw-ip"
         }
       + tags_all             = {
-          + "Name" = "servify-dev-ngw-ip"
+          + "Name" = "cuddlyduddly-ngw-ip"
         }
       + vpc                  = (known after apply)
     }
@@ -441,10 +441,10 @@ Terraform will perform the following actions:
       + id       = (known after apply)
       + owner_id = (known after apply)
       + tags     = {
-          + "Name" = "servify-dev-igw"
+          + "Name" = "cuddlyduddly-igw"
         }
       + tags_all = {
-          + "Name" = "servify-dev-igw"
+          + "Name" = "cuddlyduddly-igw"
         }
       + vpc_id   = (known after apply)
     }
@@ -460,10 +460,10 @@ Terraform will perform the following actions:
       + public_ip            = (known after apply)
       + subnet_id            = (known after apply)
       + tags                 = {
-          + "Name" = "servify-dev-ngw"
+          + "Name" = "cuddlyduddly-ngw"
         }
       + tags_all             = {
-          + "Name" = "servify-dev-ngw"
+          + "Name" = "cuddlyduddly-ngw"
         }
     }
 
@@ -494,10 +494,10 @@ Terraform will perform the following actions:
             },
         ]
       + tags             = {
-          + "Name" = "servify-dev-default-rt"
+          + "Name" = "cuddlyduddly-default-rt"
         }
       + tags_all         = {
-          + "Name" = "servify-dev-default-rt"
+          + "Name" = "cuddlyduddly-default-rt"
         }
       + vpc_id           = (known after apply)
     }
@@ -523,15 +523,15 @@ Terraform will perform the following actions:
       + egress                 = (known after apply)
       + id                     = (known after apply)
       + ingress                = (known after apply)
-      + name                   = "servify-dev-ControlPlane-sg"
+      + name                   = "cuddlyduddly-ControlPlane-sg"
       + name_prefix            = (known after apply)
       + owner_id               = (known after apply)
       + revoke_rules_on_delete = false
       + tags                   = {
-          + "Name" = "servify-dev-ControlPlane-sg"
+          + "Name" = "cuddlyduddly-ControlPlane-sg"
         }
       + tags_all               = {
-          + "Name" = "servify-dev-ControlPlane-sg"
+          + "Name" = "cuddlyduddly-ControlPlane-sg"
         }
       + vpc_id                 = (known after apply)
     }
@@ -543,15 +543,15 @@ Terraform will perform the following actions:
       + egress                 = (known after apply)
       + id                     = (known after apply)
       + ingress                = (known after apply)
-      + name                   = "servify-dev-Worker-sg"
+      + name                   = "cuddlyduddly-Worker-sg"
       + name_prefix            = (known after apply)
       + owner_id               = (known after apply)
       + revoke_rules_on_delete = false
       + tags                   = {
-          + "Name" = "servify-dev-Worker-sg"
+          + "Name" = "cuddlyduddly-Worker-sg"
         }
       + tags_all               = {
-          + "Name" = "servify-dev-Worker-sg"
+          + "Name" = "cuddlyduddly-Worker-sg"
         }
       + vpc_id                 = (known after apply)
     }
@@ -563,15 +563,15 @@ Terraform will perform the following actions:
       + egress                 = (known after apply)
       + id                     = (known after apply)
       + ingress                = (known after apply)
-      + name                   = "servify-dev-Public-sg"
+      + name                   = "cuddlyduddly-Public-sg"
       + name_prefix            = (known after apply)
       + owner_id               = (known after apply)
       + revoke_rules_on_delete = false
       + tags                   = {
-          + "Name" = "servify-dev-Public-sg"
+          + "Name" = "cuddlyduddly-Public-sg"
         }
       + tags_all               = {
-          + "Name" = "servify-dev-Public-sg"
+          + "Name" = "cuddlyduddly-Public-sg"
         }
       + vpc_id                 = (known after apply)
     }
@@ -730,14 +730,14 @@ Terraform will perform the following actions:
       + owner_id                                       = (known after apply)
       + private_dns_hostname_type_on_launch            = (known after apply)
       + tags                                           = {
-          + "Name"                              = "servify-dev-private-subnet"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
-          + "kubernetes.io/role/internal-elb"   = "1"
+          + "Name"                               = "cuddlyduddly-private-subnet"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
+          + "kubernetes.io/role/internal-elb"    = "1"
         }
       + tags_all                                       = {
-          + "Name"                              = "servify-dev-private-subnet"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
-          + "kubernetes.io/role/internal-elb"   = "1"
+          + "Name"                               = "cuddlyduddly-private-subnet"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
+          + "kubernetes.io/role/internal-elb"    = "1"
         }
       + vpc_id                                         = (known after apply)
     }
@@ -759,14 +759,14 @@ Terraform will perform the following actions:
       + owner_id                                       = (known after apply)
       + private_dns_hostname_type_on_launch            = (known after apply)
       + tags                                           = {
-          + "Name"                              = "servify-dev-private-subnet"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
-          + "kubernetes.io/role/internal-elb"   = "1"
+          + "Name"                               = "cuddlyduddly-private-subnet"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
+          + "kubernetes.io/role/internal-elb"    = "1"
         }
       + tags_all                                       = {
-          + "Name"                              = "servify-dev-private-subnet"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
-          + "kubernetes.io/role/internal-elb"   = "1"
+          + "Name"                               = "cuddlyduddly-private-subnet"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
+          + "kubernetes.io/role/internal-elb"    = "1"
         }
       + vpc_id                                         = (known after apply)
     }
@@ -788,14 +788,14 @@ Terraform will perform the following actions:
       + owner_id                                       = (known after apply)
       + private_dns_hostname_type_on_launch            = (known after apply)
       + tags                                           = {
-          + "Name"                              = "servify-dev-public-subnet"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
-          + "kubernetes.io/role/elb"            = "1"
+          + "Name"                               = "cuddlyduddly-public-subnet"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
+          + "kubernetes.io/role/elb"             = "1"
         }
       + tags_all                                       = {
-          + "Name"                              = "servify-dev-public-subnet"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
-          + "kubernetes.io/role/elb"            = "1"
+          + "Name"                               = "cuddlyduddly-public-subnet"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
+          + "kubernetes.io/role/elb"             = "1"
         }
       + vpc_id                                         = (known after apply)
     }
@@ -817,14 +817,14 @@ Terraform will perform the following actions:
       + owner_id                                       = (known after apply)
       + private_dns_hostname_type_on_launch            = (known after apply)
       + tags                                           = {
-          + "Name"                              = "servify-dev-public-subnet"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
-          + "kubernetes.io/role/elb"            = "1"
+          + "Name"                               = "cuddlyduddly-public-subnet"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
+          + "kubernetes.io/role/elb"             = "1"
         }
       + tags_all                                       = {
-          + "Name"                              = "servify-dev-public-subnet"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
-          + "kubernetes.io/role/elb"            = "1"
+          + "Name"                               = "cuddlyduddly-public-subnet"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
+          + "kubernetes.io/role/elb"             = "1"
         }
       + vpc_id                                         = (known after apply)
     }
@@ -850,12 +850,12 @@ Terraform will perform the following actions:
       + main_route_table_id                  = (known after apply)
       + owner_id                             = (known after apply)
       + tags                                 = {
-          + "Name"                              = "servify-dev-vpc"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "Name"                               = "cuddlyduddly-vpc"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
         }
       + tags_all                             = {
-          + "Name"                              = "servify-dev-vpc"
-          + "kubernetes.io/cluster/servify-dev" = "shared"
+          + "Name"                               = "cuddlyduddly-vpc"
+          + "kubernetes.io/cluster/cuddlyduddly" = "shared"
         }
     }
 
@@ -864,7 +864,7 @@ Plan: 42 to add, 0 to change, 0 to destroy.
 Changes to Outputs:
   + cluster_ca_certificate = (known after apply)
   + cluster_endpoint       = (known after apply)
-  + cluster_name           = "servify-dev"
+  + cluster_name           = "cuddlyduddly"
 
 ─────────────────────────────────────────────────────────────────────────────
 
