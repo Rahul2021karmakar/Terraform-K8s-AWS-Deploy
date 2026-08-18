@@ -19,3 +19,9 @@ variable "node_role_arn" {}
 variable "tags" {}
 
 variable "vpc_id" {}
+
+variable "kubernetes_version" {
+  description = "Kubernetes version"
+  type        = string
+  default     = "1.35"
+}

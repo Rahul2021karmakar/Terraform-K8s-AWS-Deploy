@@ -38,11 +38,28 @@ resource "aws_iam_role_policy_attachment" "ebs_csi_policy" {
 #   value = aws_iam_role.ebs_csi.arn
 # }
 
+# EBS CSI
 resource "aws_eks_addon" "ebs_csi" {
   cluster_name             = var.cluster_name
   addon_name               = "aws-ebs-csi-driver"
   addon_version            = var.ebs_csi_version
-  service_account_role_arn = aws_iam_role.ebs_csi.arn # var.ebs_csi_role_arn
+  service_account_role_arn = aws_iam_role.ebs_csi.arn
+}
+
+# kube-proxy
+data "aws_eks_addon_version" "kube_proxy" {
+  addon_name         = "kube-proxy"
+  kubernetes_version = var.kubernetes_version
+  most_recent        = true
+}
+
+resource "aws_eks_addon" "kube_proxy" {
+  cluster_name  = var.cluster_name
+  addon_name    = "kube-proxy"
+  addon_version = data.aws_eks_addon_version.kube_proxy.version
+
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
 }
 
 # resource "aws_eks_addon" "alb_controller" {

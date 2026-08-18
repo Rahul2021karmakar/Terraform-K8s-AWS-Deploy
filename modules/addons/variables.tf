@@ -16,3 +16,9 @@ variable "oidc_provider_url" {
   description = "OIDC provider URL (issuer)"
   type        = string
 }
+
+variable "kubernetes_version" {
+  description = "Kubernetes version"
+  type        = string
+  default     = "1.35"
+}
