@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 module "vpc" {
   source          = "../../modules/vpc"
   vpc_cidr        = var.vpc_cidr
@@ -36,4 +38,24 @@ module "addons" {
   cluster_name      = module.eks.cluster_name
   oidc_provider_url = module.oidc.oidc_provider_url
   oidc_provider_arn = module.oidc.oidc_provider_arn
+}
+
+
+module "karpenter" {
+  source = "../../modules/karpenter"
+
+  depends_on = [
+    module.eks,
+    module.oidc,
+    module.iam
+  ]
+
+  project                  = var.project
+  cluster_name             = module.eks.cluster_name
+  oidc_provider_arn        = module.oidc.oidc_provider_arn
+  oidc_provider_url        = module.oidc.oidc_provider_url
+  karpenter_node_role_name = module.iam.karpenter_node_role_name
+
+  aws_region     = var.region
+  aws_account_id = data.aws_caller_identity.current.account_id
 }

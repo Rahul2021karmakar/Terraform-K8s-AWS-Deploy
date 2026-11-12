@@ -76,6 +76,44 @@ resource "aws_iam_role_policy_attachment" "eks_node_policy" {
 }
 
 
+# Karpenter EC2 Node IAM Role
+resource "aws_iam_role" "karpenter_node" {
+  name = "${var.project}-karpenter-node-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+# Permissions required by Karpenter-launched EKS nodes
+resource "aws_iam_role_policy_attachment" "karpenter_node_policy" {
+  for_each = toset([
+    "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+    "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly",
+    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  ])
+
+  role       = aws_iam_role.karpenter_node.name
+  policy_arn = each.value
+}
+
+output "karpenter_node_role_arn" {
+  value = aws_iam_role.karpenter_node.arn
+}
+
+output "karpenter_node_role_name" {
+  value = aws_iam_role.karpenter_node.name
+}
+
+
 output "eks_cluster_role_arn" {
   value = aws_iam_role.eks_cluster.arn
 }
@@ -91,3 +129,5 @@ output "eks_node_role_arn" {
 output "eks_node_role_name" {
   value = aws_iam_role.node.name
 }
+
+

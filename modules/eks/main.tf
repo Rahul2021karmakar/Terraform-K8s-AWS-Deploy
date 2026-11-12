@@ -20,6 +20,15 @@ resource "aws_eks_cluster" "main" {
   
 }
 
+# Tag the EKS-generated cluster security group for Karpenter discovery
+resource "aws_ec2_tag" "karpenter_cluster_security_group" {
+  resource_id = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
+
+  key   = "karpenter.sh/discovery"
+  value = var.project
+}
+
+
 # resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
 #   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 #   role       = var.cluster_role_name

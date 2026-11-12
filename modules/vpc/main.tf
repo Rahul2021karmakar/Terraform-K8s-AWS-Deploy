@@ -40,6 +40,7 @@ resource "aws_subnet" "private" {
     Name                                   = "${var.project}-private-subnet"
     "kubernetes.io/cluster/${var.project}" = "shared"
     "kubernetes.io/role/internal-elb"      = 1
+    "karpenter.sh/discovery" = var.project
   }
 
 }
